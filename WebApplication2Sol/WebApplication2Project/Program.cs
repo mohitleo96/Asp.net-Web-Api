@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication2Project.Data;
+using WebApplication2Project.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,12 @@ builder.Services.AddDbContext<NZWalksDBContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnection"));
     });
+//Whenever I ask for the IRegioRrepository interface,
+//give me the implementation for the RegionRepository.
+
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+//It checks the all files where automapper is used.
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 
